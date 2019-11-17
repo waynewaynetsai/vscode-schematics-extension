@@ -1,65 +1,93 @@
-# schematics-extension README
+# Schematics Extension
 
-This is the README for your extension "schematics-extension". After writing up a brief description, we recommend including the following sections.
+Handling schematics cli commands via VSCode Graphical User Interface. Inspired by [Angular Schematics](https://marketplace.visualstudio.com/items?itemName=cyrilletuzi.angular-schematics).  
 
-## Features
+Schematics Extension only depends on Schematics CLI to generate boilerplate code and file, so you can use it without angular project and node_modules to generate any code boilerplate everywhere.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+![](https://i.imgur.com/RdNF1gc.gif)
 
-For example if there is an image subfolder under your extension project workspace:
+## Guide
 
-\!\[feature X\]\(images/feature-x.png\)
+####  1. Extension Settings: 
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+Setting node_modules schematics projectname or your schematics project path in vscode settings.
+
+ ```code```->```preference``` -> ```settings``` -> ```user``` -> ```extensions``` -> ```Schematics Extension```
+
+![](https://i.imgur.com/4d6ZP1B.png)
+
+Settings for node_modules can only use your schematics at nodejs project or other project with node_modules.
+
+> NOTICE: If you want to use schematics in your node_modules, make sure you also link you schematics to your node_modules(try to use ```npm link``` command), or just install published schematics in your node_modules. 
+
+####  2. Getting start Schematics via GUI: 
+
+You can start use schematics cli via three places:
+
+1. Command Palette: Generate schematic file:
+
+    - open command palette: 
+    
+    - -   ```cmd + shift + p``` 
+    
+    -  select ```schematics extension: execute via command palette```
+
+2. Files Explorer menu: 
+
+    - open menu: 
+    
+        Right-clicking files in explorer
+        ![](https://i.imgur.com/7huk0fq.png)
+    - select ```schematics extension: execute schematics```
+
+3. Schematics' Treeview 
+
+    - open Treeview: 
+       
+       Select Activity bar's icon on the left
+
+       ![](https://i.imgur.com/ytpgLSk.png)
+    - select your schematics template.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### VS Code
 
-## Extension Settings
+Schematics Extension requires Visual Studio Code version >= 1.39.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+### Schematics cli
+install your schematics cli first.
 
-For example:
+```npm i -g schematics``` 
+## Details
 
-This extension contributes the following settings:
+Schematics Extension will be auto actived in node dependened project (with package.json).
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+It will also be actived in language file
+as follow:
 
-## Known Issues
+- typescript
+- javascript
+- java
+- dart
+- python
+- golang
+- kotlin
+- swift
+- csharp
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+If your extension is not actived, you can manual trigger it by lanunching our custom command in palatte 
+
+ ```schematics extension: execute schematics```
+
+or by right-clicking your file under explorer then select our custom command item.
 
 ## Release Notes
 
 Users appreciate release notes as you update your extension.
 
-### 1.0.0
+### 1.0.0 - Beta (2019/11/17)
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Hello World Schematics Extension!
 
 -----------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**

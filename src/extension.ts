@@ -1,27 +1,28 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { output } from './main/output';
+import { setupTreeDataProvider } from './main/treeview';
+import { command } from './main/command';
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "schematics-extension" is now active!');
+	vscode.commands.executeCommand('setContext', 'isActive', true);
+	
+	setupTreeDataProvider(context);
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World!');
+	let palatteCmd = vscode.commands.registerCommand('extension.palatte', () => {
+		command.execute('selectAll', context);
 	});
-
-	context.subscriptions.push(disposable);
+	let treeItemCmd = vscode.commands.registerCommand('extension.treeItem', (context, options) => {
+		command.execute('selectItem', context, options);
+	});
+	let explorerCmd = vscode.commands.registerCommand('extension.menu', async (context, options) => {
+		command.execute('selectAll', context);
+	});
+	context.subscriptions.push(palatteCmd, explorerCmd, treeItemCmd);
 }
 
-// this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate(context: vscode.ExtensionContext) {
+	output.dispose();
+	command.dispose();
+}
+

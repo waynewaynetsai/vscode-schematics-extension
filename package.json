@@ -1,25 +1,100 @@
 {
 	"name": "schematics-extension",
-	"displayName": "schematics-extension",
+	"displayName": "Schematics Extension",
 	"description": "Handling schematics cli commands via VSCode Graphical User Interface.",
-	"version": "0.0.1",
+	"version": "1.0.0",
+	"publisher": "shangweitsai",
 	"engines": {
-		"vscode": "^1.40.0"
+		"vscode": "^1.39.0"
 	},
+	"keywords": [
+		"schematics",
+		"code generator",
+		"generator",
+		"boilerplate"
+	],
 	"categories": [
 		"Other"
 	],
+	"icon": "schematics-extension-icon.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ShangWeiTsai/vscode-schematics-extension.git"
+	},
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"onCommand:extension.palatte",
+		"onCommand:extension.menu",
+		"onLanguage:csharp",
+		"onLanguage:java",
+		"onLanguage:dart",
+		"onLanguage:golang",
+		"onLanguage:kotlin",
+		"onLanguage:swift",
+		"onLanguage:python",
+		"onLanguage:javascript",
+		"onLanguage:typescript",
+		"workspaceContains:package.json"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [
-			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
+		"configuration": [{
+			"title": "Schematics Extension Configuration",
+			"properties": {
+				"extschematics.nodemodules": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"default": [],
+					"description": "Add your custom schematics project name , schematic will load it from your node_nodules"
+				},
+				"extschematics.localpath": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"default": [],
+					"description": "Add your custom schematics project absolute path, schematic will load it from your computer"
+				}
 			}
-		]
+		}],
+		"commands": [{
+				"command": "extension.palatte",
+				"title": "schematics extension: execute schematics"
+			},
+			{
+				"command": "extension.menu",
+				"title": "schematics extension: execute schematics"
+			},
+			{
+				"command": "extension.treeItem",
+				"title": "chematics Extension: explorer command",
+				"icon": {
+					"light": "schematics.svg",
+					"dark": "schematics.svg"
+				}
+			}
+		],
+		"menus": {
+			"explorer/context": [{
+				"command": "extension.menu",
+				"group": "anavigation@1"
+			}]
+		},
+		"viewsContainers": {
+			"activitybar": [{
+				"id": "sch-entry",
+				"title": "schematics extension",
+				"icon": "schematics.svg"
+			}]
+		},
+		"views": {
+			"sch-entry": [{
+				"id": "SchematicsView",
+				"name": "Schematics Menu",
+				"when": "isActive"
+			}]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
@@ -28,11 +103,12 @@
 		"pretest": "npm run compile",
 		"test": "node ./out/test/runTest.js"
 	},
+	"dependencies": {},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.11.7",
-		"@types/vscode": "^1.40.0",
+		"@types/vscode": "^1.39.0",
 		"glob": "^7.1.5",
 		"mocha": "^6.2.2",
 		"typescript": "^3.6.4",
