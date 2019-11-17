@@ -37,7 +37,7 @@ You can start use schematics cli via three places:
     - open menu: 
     
         Right-clicking files in explorer
-        ![](https://i.imgur.com/7huk0fq.png)
+        ![](https://i.imgur.com/2vp3NMa.png)
     - select ```schematics extension: execute schematics```
 
 3. Schematics' Treeview 
@@ -51,7 +51,7 @@ You can start use schematics cli via three places:
 
 ## Requirements
 
-### VS Code
+### VSCode
 
 Schematics Extension requires Visual Studio Code version >= 1.39.
 
@@ -61,10 +61,7 @@ install your schematics cli first.
 ```npm i -g schematics``` 
 ## Details
 
-Schematics Extension will be auto actived in node dependened project (with package.json).
-
-It will also be actived in language file
-as follow:
+Schematics Extension will be auto actived when entering languages files as follow:
 
 - typescript
 - javascript
@@ -78,6 +75,7 @@ as follow:
 
 If your extension is not actived, you can manual trigger it by lanunching our custom command in palatte 
 
+such as : 
  ```schematics extension: execute schematics```
 
 or by right-clicking your file under explorer then select our custom command item.
