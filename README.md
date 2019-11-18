@@ -2,7 +2,7 @@
 
 Handling schematics cli commands via VSCode Graphical User Interface. Inspired by [Angular Schematics](https://marketplace.visualstudio.com/items?itemName=cyrilletuzi.angular-schematics).  
 
-Schematics Extension only depends on Schematics CLI to generate boilerplate code and file, so you can use it without angular project and node_modules to generate any code boilerplate everywhere.
+Schematics Extension is based on Schematics CLI to generate boilerplate code and file, so you can use it without angular project and node_modules to generate any code boilerplate in any place.
 
 ![](https://i.imgur.com/RdNF1gc.gif)
 

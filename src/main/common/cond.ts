@@ -3,7 +3,7 @@ type CondStrategy = {
     handle: Function;
 };
 
-export const condStrategy = (predictFn: (data: any) => boolean, handleFn: Function) => ({ 
+export const condStrategy = (predictFn: (data: any) => boolean, handleFn: Function): CondStrategy => ({ 
     predict: predictFn,
     handle: handleFn
 });

@@ -91,9 +91,25 @@ class Chainer {
 }
 
 
-export type HandlerFactory = () => Handler;
+export type HandlerFactory = (...fns: Function[]) => Handler;
 export const handlerBuilder = () => new HandlerBuilder();
 export const chain = (...handlersOrChainer: (Handler | HandlerFactory | Chainer)[]) => new Chainer(...handlersOrChainer);
 
-export const actionHandler = (action: Function) => () => handlerBuilder().setAction(action).build();
-export const voidActionHandler = (action: Function) => () => handlerBuilder().setActionVoid(true).setAction(action).build();
+export const actionHandler = (action: Function) => () => handlerBuilder()
+    .setAction(action)
+    .build();
+export const voidActionHandler = (action: Function) => () => handlerBuilder()
+    .setActionVoid(true)
+    .setAction(action)
+    .build();
+export const actionCondHandler = (predict: (data: any) => boolean, action: Function) => () => handlerBuilder()
+    .setPredictor(predict)
+    .setAction(action)
+    .build();
+export const voidActionCondHandler = (predict: (data: any) => boolean, action: Function) => () => handlerBuilder()
+    .setActionVoid(true)    
+    .setPredictor(predict)
+    .setAction(action)
+    .build();
+
+    

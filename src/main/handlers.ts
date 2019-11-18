@@ -69,23 +69,20 @@ const multiOptsSelectHandler = actionHandler(async (data: PromptPlayload) => {
 
 const eachSelectedOptsHandler = actionHandler(async (data: PromptPlayload) => {
     const selectedOpts = data.selectedOpts as vscode.QuickPickItem[];
-    const optsSetting: string[] = [];
-    const optsChain = (arr: any[]) => selectedOpts.reduce(async (chain: Promise<any>, item: vscode.QuickPickItem) => {
-        return chain.then(async result => {
-            if (result) {
-                optsSetting.push(result);
-            }
+    const optsChain = (arr: any[]) => selectedOpts.reduce((chain: Promise<any>, item: vscode.QuickPickItem) => {
+        return chain.then(async acc => {
             const ret = condOptions(data.path!)({
                 setting: data.rulejson!.properties[item.label],
                 item: item
             });
-            return ret;
+            return ret.then((result) => [...acc, result])
+                      .catch(err=> console.log('multiOptsError:', err.toString()));
         });
-    }, Promise.resolve() as Promise<any>).then((result) => optsSetting.push(result));
-    await optsChain(selectedOpts);
+    }, Promise.resolve([]) as Promise<any>);
+    const optsSettings = await optsChain(selectedOpts);
     const playload: PromptPlayload = {
         ...data,
-        optsCommands: optsSetting.join(' ')
+        optsCommands: optsSettings.join(' ')
     };
     return playload;
 });
