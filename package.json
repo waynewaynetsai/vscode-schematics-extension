@@ -68,7 +68,7 @@
 			},
 			{
 				"command": "extension.treeItem",
-				"title": "chematics Extension: explorer command",
+				"title": "schematics Extension: explorer command",
 				"icon": {
 					"light": "schematics.svg",
 					"dark": "schematics.svg"
