@@ -50,6 +50,7 @@ You can start use schematics cli via three places:
     - select your schematics template.
 ## Support schema.json's property types
 
+### Schema.json's Properties
 | Property Schema   | prompt type    | 
 | -------------     |:-------------:| 
 | "type": "boolean" | confirmation ("yes"=true, "no"=false) |
@@ -57,7 +58,7 @@ You can start use schematics cli via three places:
 | "type": "number" | input (only valid numbers accepted)  |
 | "type": "integer" | input (only valid integer accepted)  |
 | "enum": [...] | list (enum members become list selections)  |
-
+### X-prompt's Properties
 | X-prompt Property   | prompt type    | 
 | -------------     |:-------------:| 
 | "type": "comfirmation" | confirmation ("yes"=true, "no"=false) |
