@@ -96,7 +96,6 @@ or by right-clicking your file under explorer then select our custom command ite
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
 ### 1.0.0 - rc (2019/11/26)
 support more schema.json's properties type. 
 - properties type: enum/number/integer.
