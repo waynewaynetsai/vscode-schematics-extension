@@ -54,15 +54,18 @@ const multiOptsSelectHandler = actionHandler(async (data: PromptPlayload) => {
         .map((keyValuePair: [string, SchemaDataOptions]) => ({
             label: keyValuePair[0],
             description: keyValuePair[1].description || keyValuePair[0],
-            picked: data.rulejson!.required!.includes(keyValuePair[0]) || (keyValuePair[1].format === 'path')
+            picked: !!keyValuePair[1]["x-prompt"] || data.rulejson!.required!.includes(keyValuePair[0]) || (keyValuePair[1].format === 'path'),
+            required: !!keyValuePair[1]["x-prompt"] || data.rulejson!.required!.includes(keyValuePair[0])
         }));
     const _selectedOptions = await selectMultiOptions('Select your custom setting options')(choices);
     if (_selectedOptions.length === 0) {
         return false;
     }
+    // Force required item to be exist in selected array
+    const _finalSelectedOpts = Array.from(new Set([..._selectedOptions,...choices.filter((quickpicked: any)=> quickpicked.required)]));
     const playload: PromptPlayload = {
         ...data,
-        selectedOpts: _selectedOptions
+        selectedOpts: _finalSelectedOpts
     };
     return playload;
 });
@@ -76,7 +79,7 @@ const eachSelectedOptsHandler = actionHandler(async (data: PromptPlayload) => {
                 item: item
             });
             return ret.then((result) => [...acc, result])
-                      .catch(err=> console.log('multiOptsError:', err.toString()));
+                      .catch(err=> console.log('eachSelectedOptsError:', err.toString()));
         });
     }, Promise.resolve([]) as Promise<any>);
     const optsSettings = await optsChain(selectedOpts);

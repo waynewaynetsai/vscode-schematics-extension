@@ -14,7 +14,7 @@ export const selectSchnameOptions = async (sortedChoices: any[]) => await vscode
     ignoreFocusOut: true,
 }) || [];
 
-export const selectOptions = (_placeHolder: string, _prompt?: string) => async (sortedChoices: any[]) => await vscode.window.showQuickPick(sortedChoices, {
+export const selectOptions = (_placeHolder?: string, _prompt?: string) => async (sortedChoices: any[]) => await vscode.window.showQuickPick(sortedChoices, {
     canPickMany: false,
     placeHolder: _placeHolder,
     prompt: _prompt,

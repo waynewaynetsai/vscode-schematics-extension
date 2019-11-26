@@ -4,12 +4,12 @@ export interface SchemaDataDefaultOption {
 }
 
 export interface SchemaDataOptions {
-    type: 'string' | 'boolean' | 'array';
+    type: 'string' | 'boolean' | 'number' | 'integer';
     description: string;
     format?: string;
     enum?: string[];
     visible?: boolean;
-    default?: string | boolean;
+    default?: string | boolean | number;
     $default?: SchemaDataDefaultOption;
     extends?: string;
     'x-deprecated'?: string;
@@ -17,7 +17,7 @@ export interface SchemaDataOptions {
         message?: string;
         multiselect?: boolean;
         items?: any[];
-        type? : string;
+        type? : 'confirmation' | 'input' | 'list';
     };
 }
 

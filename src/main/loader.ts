@@ -3,6 +3,7 @@ import * as path from 'path';
 import { PackageJSON, CollectionData, SchematicConfig } from './model';
 import { pipe, wait, catchAsync } from './common/fp';
 import * as utils from './utils/index';
+import { output } from './output';
 
 const getWorkspaceSettings = () => ({
 	nodemodules: vscode.workspace.getConfiguration().get<string[]>(`extschematics.nodemodules`, []),
@@ -66,7 +67,11 @@ const getSchemaJsonsSetting = (cwd: string) => (collectionSettings: any[]) => {
 	return Promise.all(ret);
 };
 
-const log = (err: Error) => console.log('LoadingPipe Error', err.toString());
+const log = (err: Error) => {
+	console.log('LoadingPipe Error', err.toString());
+	output.channel.appendLine(err.toString());
+	output.channel.show();
+};
 
 export const workspacePath = vscode.workspace.workspaceFolders![0].uri.path;
 
