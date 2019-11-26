@@ -2,7 +2,7 @@
 	"name": "schematics-extension",
 	"displayName": "Schematics Extension",
 	"description": "Handling schematics cli commands via VSCode Graphical User Interface.",
-	"version": "1.0.2",
+	"version": "1.1.0",
 	"publisher": "shangweitsai",
 	"engines": {
 		"vscode": "^1.39.0"
