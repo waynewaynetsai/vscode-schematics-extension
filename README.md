@@ -48,7 +48,21 @@ You can start use schematics cli via three places:
 
        ![](https://i.imgur.com/ytpgLSk.png)
     - select your schematics template.
+## Support schema.json's property types
 
+| Property Schema   | prompt type    | 
+| -------------     |:-------------:| 
+| "type": "boolean" | confirmation ("yes"=true, "no"=false) |
+| "type": "string" | input |
+| "type": "number" | input (only valid numbers accepted)  |
+| "type": "integer" | input (only valid integer accepted)  |
+| "enum": [...] | list (enum members become list selections)  |
+
+| X-prompt Property   | prompt type    | 
+| -------------     |:-------------:| 
+| "type": "comfirmation" | confirmation ("yes"=true, "no"=false) |
+| "type": "input" | input(Textual input; ideal for string or number options.) |
+| "type": "list" | list(A predefined set of allowed values.)  |
 ## Requirements
 
 ### VSCode
@@ -83,7 +97,10 @@ or by right-clicking your file under explorer then select our custom command ite
 ## Release Notes
 
 Users appreciate release notes as you update your extension.
-
+### 1.0.0 - rc (2019/11/26)
+support more schema.json's properties type. 
+- properties type: enum/number/integer.
+- x-prompt type: confirmation/input
 ### 1.0.0 - Beta (2019/11/17)
 
 Hello World Schematics Extension!
