@@ -26,6 +26,7 @@ const pathCond = (path: string) => condStrategy(
     (data: OptionsData) => !!data.setting.format && data.setting.format === 'path',
     (data: OptionsData) => inputDefaultPath(path).then((reply?: string) => !!(reply && reply.length > 0) ? `--${data.item.label}=${reply}` : '')
 );
+
 const typeNumberCond = condStrategy(
     (data: OptionsData) => !!data.setting.type && data.setting.type === "number",
     (data: OptionsData) => {
@@ -38,6 +39,7 @@ const typeNumberCond = condStrategy(
         return ret;
     }
 );
+
 const typeIntegerCond = condStrategy(
     (data: OptionsData) => !!data.setting.type && data.setting.type === "integer",
     (data: OptionsData) => {

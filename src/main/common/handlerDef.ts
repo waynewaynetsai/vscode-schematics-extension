@@ -6,8 +6,8 @@ class HandlerBuilder {
     private handleFn!: Function;
     constructor() {
     }
-    setPredictor(predictFn: (data: any) => boolean) {
-        this.predictFn = predictFn;
+    setPredictor(predicate: (data: any) => boolean) {
+        this.predictFn = predicate;
         return this;
     }
     setAction(handleFn: Function, isVoid = false) {
@@ -30,15 +30,15 @@ class HandlerBuilder {
 export class Handler {
     nextHandler: Handler | null = null;
     private isActionVoid: Boolean;
-    private predictFn: (data: any) => boolean;
+    private predicateFn: (data: any) => boolean;
     private handleFn: Function;
-    constructor(predictFn: (data: any) => boolean, handleFn: Function, isActionVoid: boolean) {
-        this.predictFn = predictFn;
+    constructor(predicateFn: (data: any) => boolean, handleFn: Function, isActionVoid: boolean) {
+        this.predicateFn = predicateFn;
         this.handleFn = handleFn;
         this.isActionVoid = isActionVoid;
     }
-    private predict(data: any) {
-        return this.predictFn(data);
+    private predicate(data: any) {
+        return this.predicateFn(data);
     }
     async handle(data: any) {
         if (this.isActionVoid) {
@@ -55,7 +55,7 @@ export class Handler {
         (this.nextHandler !== null) ? this.nextHandler.dispatch(requestData) : null;
     }
     private dispatch(reqData: any) {
-        (this.predict(reqData)) ? this.handle(reqData) : this.next(reqData);
+        (this.predicate(reqData)) ? this.handle(reqData) : this.next(reqData);
     }
     then(handler: Handler) {
         this.nextHandler = handler;
@@ -90,9 +90,10 @@ class Chainer {
     }
 }
 
-
 export type HandlerFactory = (...fns: Function[]) => Handler;
+
 export const handlerBuilder = () => new HandlerBuilder();
+
 export const chain = (...handlersOrChainer: (Handler | HandlerFactory | Chainer)[]) => new Chainer(...handlersOrChainer);
 
 export const actionHandler = (action: Function) => () => handlerBuilder()
@@ -102,13 +103,13 @@ export const voidActionHandler = (action: Function) => () => handlerBuilder()
     .setActionVoid(true)
     .setAction(action)
     .build();
-export const actionCondHandler = (predict: (data: any) => boolean, action: Function) => () => handlerBuilder()
-    .setPredictor(predict)
+export const actionCondHandler = (predicate: (data: any) => boolean, action: Function) => () => handlerBuilder()
+    .setPredictor(predicate)
     .setAction(action)
     .build();
-export const voidActionCondHandler = (predict: (data: any) => boolean, action: Function) => () => handlerBuilder()
+export const voidActionCondHandler = (predicate: (data: any) => boolean, action: Function) => () => handlerBuilder()
     .setActionVoid(true)    
-    .setPredictor(predict)
+    .setPredictor(predicate)
     .setAction(action)
     .build();
 
