@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { PromptPlayload, SchematicConfig, SchemaDataOptions } from "./model";
+import { PromptPayload, SchematicConfig, SchemaDataOptions } from "./model";
 import { chain, actionHandler } from "./common/handlerDef";
 import { selectedProjects, selectSchnameOptions, selectMultiOptions } from './prompt';
 import { workspacePath } from './loader';
@@ -7,49 +7,49 @@ import { output } from './output';
 import { condOptions } from './conditions';
 import * as utils from './utils';
 
-const selectTreeitemHandler = actionHandler((data: PromptPlayload) => {
+const selectTreeitemHandler = actionHandler((data: PromptPayload) => {
     const { type, path, rules }  = data.allconfigs!.filter((v: SchematicConfig) => v.schname === data.schname)[0];
-    const playload: PromptPlayload = {
+    const payload: PromptPayload = {
         ...data,
         type: type,
         schpath: path,
         rulejson: rules.filter(r=>r.rulename===data.rulename).map(x => x.json)[0]
     };
-    return playload;
+    return payload;
 });
 
-const schSelectHandler = actionHandler(async (data: PromptPlayload) => {
+const schSelectHandler = actionHandler(async (data: PromptPayload) => {
     const replySchname = await selectedProjects(data.allconfigs!.map((x: SchematicConfig) => x.schname));
-    const playload: PromptPlayload = {
+    const payload: PromptPayload = {
         ...data,
         schname: replySchname
     };
-    return playload;
+    return payload;
 });
 
-const ruleSelectHandler = actionHandler(async (data: PromptPlayload) => {
+const ruleSelectHandler = actionHandler(async (data: PromptPayload) => {
     const { type, path, rules } = data.allconfigs!.filter((v: SchematicConfig) => v.schname === data.schname)[0];
     delete data.allconfigs;
     const _rulename = await selectSchnameOptions(rules.map((x) => x.rulename));
-    const playload: PromptPlayload = {
+    const payload: PromptPayload = {
         ...data,
         type: type,
         schpath: path,
         rulename: _rulename,
         rulejson: rules.filter(r=>r.rulename===_rulename).map(x => x.json)[0]
     };
-    return playload;
+    return payload;
 });
 
-const filePathHandler = (contextPath: string) => actionHandler(async (data: PromptPlayload) => {
-    const playload: PromptPlayload = {
+const filePathHandler = (contextPath: string) => actionHandler(async (data: PromptPayload) => {
+    const payload: PromptPayload = {
         ...data,
         path: contextPath
     };
-    return playload;
+    return payload;
 });
 
-const multiOptsSelectHandler = actionHandler(async (data: PromptPlayload) => {
+const multiOptsSelectHandler = actionHandler(async (data: PromptPayload) => {
     const choices: vscode.QuickPickItem[] = Object.entries(data.rulejson!.properties)
         .map((keyValuePair: [string, SchemaDataOptions]) => ({
             label: keyValuePair[0],
@@ -63,14 +63,14 @@ const multiOptsSelectHandler = actionHandler(async (data: PromptPlayload) => {
     }
     // Force required item to be exist in selected array
     const _finalSelectedOpts = Array.from(new Set([..._selectedOptions,...choices.filter((quickpicked: any)=> quickpicked.required)]));
-    const playload: PromptPlayload = {
+    const payload: PromptPayload = {
         ...data,
         selectedOpts: _finalSelectedOpts
     };
-    return playload;
+    return payload;
 });
 
-const eachSelectedOptsHandler = actionHandler(async (data: PromptPlayload) => {
+const eachSelectedOptsHandler = actionHandler(async (data: PromptPayload) => {
     const selectedOpts = data.selectedOpts as vscode.QuickPickItem[];
     const optsChain = (arr: any[]) => selectedOpts.reduce((chain: Promise<any>, item: vscode.QuickPickItem) => {
         return chain.then(async acc => {
@@ -83,14 +83,14 @@ const eachSelectedOptsHandler = actionHandler(async (data: PromptPlayload) => {
         });
     }, Promise.resolve([]) as Promise<any>);
     const optsSettings = await optsChain(selectedOpts);
-    const playload: PromptPlayload = {
+    const payload: PromptPayload = {
         ...data,
         optsCommands: optsSettings.join(' ')
     };
-    return playload;
+    return payload;
 });
 
-const composeCommandHandler = actionHandler(async (data: PromptPlayload) => {
+const composeCommandHandler = actionHandler(async (data: PromptPayload) => {
     const commandStr = (schname: string, rulename: string, options = '') => {
         return (data.type === 'nodemodules') ? `schematics ./node_modules/${schname}/src/collection.json:${rulename} ${options} --dry-run=false`
         : `schematics ${data.schpath}/src/collection.json:${rulename} ${options} --dry-run=false`;

@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { SchematicConfig, SchemaData } from ".";
 
-export type PromptPlayload = {
+export type PromptPayload = {
     allconfigs?: SchematicConfig[];
     type?: string;
     schpath?: string;
