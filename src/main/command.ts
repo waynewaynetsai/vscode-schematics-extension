@@ -2,7 +2,7 @@
 import { EventEmitter } from 'events';
 import * as vscode from 'vscode';
 import { workspacePath, loadConfig } from './loader';
-import { MenuContext, PromptPlayload, TreeItemOptions } from './model';
+import { MenuContext, PromptPayload, TreeItemOptions } from './model';
 import { selectTreeItemHandler, selectMenuHandler } from './handlers';
 
 const evtm = new EventEmitter();
@@ -11,7 +11,7 @@ evtm.on('selectAll', async (context: MenuContext) => {
     const path = context.path ? context.path : workspacePath;
     selectMenuHandler(path).handle({ 
         allconfigs: await loadConfig() 
-    } as PromptPlayload);
+    } as PromptPayload);
 });
 
 evtm.on('selectItem', async  (__, options: TreeItemOptions) => {
@@ -21,7 +21,7 @@ evtm.on('selectItem', async  (__, options: TreeItemOptions) => {
     selectTreeItemHandler(workspacePath).handle({
         ...options,
         allconfigs: await loadConfig()  
-    } as PromptPlayload);
+    } as PromptPayload);
 });
 
 export const command = {
