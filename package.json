@@ -37,28 +37,31 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"configuration": [{
-			"title": "Schematics Extension Configuration",
-			"properties": {
-				"extschematics.nodemodules": {
-					"type": "array",
-					"items": {
-						"type": "string"
+		"configuration": [
+			{
+				"title": "Schematics Extension Configuration",
+				"properties": {
+					"extschematics.nodemodules": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"default": [],
+						"description": "Add your custom schematics project name , schematic will load it from your node_nodules"
 					},
-					"default": [],
-					"description": "Add your custom schematics project name , schematic will load it from your node_nodules"
-				},
-				"extschematics.localpath": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					},
-					"default": [],
-					"description": "Add your custom schematics project absolute path, schematic will load it from your computer"
+					"extschematics.localpath": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"default": [],
+						"description": "Add your custom schematics project absolute path, schematic will load it from your computer"
+					}
 				}
 			}
-		}],
-		"commands": [{
+		],
+		"commands": [
+			{
 				"command": "extension.palatte",
 				"title": "schematics extension: execute schematics"
 			},
@@ -76,24 +79,30 @@
 			}
 		],
 		"menus": {
-			"explorer/context": [{
-				"command": "extension.menu",
-				"group": "anavigation@1"
-			}]
+			"explorer/context": [
+				{
+					"command": "extension.menu",
+					"group": "anavigation@1"
+				}
+			]
 		},
 		"viewsContainers": {
-			"activitybar": [{
-				"id": "sch-entry",
-				"title": "schematics extension",
-				"icon": "schematics.svg"
-			}]
+			"activitybar": [
+				{
+					"id": "sch-entry",
+					"title": "schematics extension",
+					"icon": "schematics.svg"
+				}
+			]
 		},
 		"views": {
-			"sch-entry": [{
-				"id": "SchematicsView",
-				"name": "Schematics Menu",
-				"when": "isActive"
-			}]
+			"sch-entry": [
+				{
+					"id": "SchematicsView",
+					"name": "Schematics Menu",
+					"when": "isActive"
+				}
+			]
 		}
 	},
 	"scripts": {
@@ -110,9 +119,9 @@
 		"@types/node": "^12.11.7",
 		"@types/vscode": "^1.39.0",
 		"glob": "^7.1.5",
-		"mocha": "^6.2.2",
+		"mocha": "^8.0.1",
 		"typescript": "^3.6.4",
-		"tslint": "^5.20.0",
+		"tslint": "^6.1.2",
 		"vscode-test": "^1.2.2"
 	}
 }
